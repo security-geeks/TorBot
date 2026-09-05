@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DedSecInside/TorBot/schemas/crawl-result.v1.schema.json",
+  "title": "TorBot crawl-result v1",
+  "type": "object",
+  "required": ["schemaVersion", "target", "pages"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "runId": {"type": "string"},
+    "target": {"type": "string", "minLength": 1},
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["url", "outcome"],
+        "properties": {
+          "url": {"type": "string", "minLength": 1},
+          "outcome": {"enum": ["fetched", "failed", "skipped"]},
+          "content": {
+            "type": "object",
+            "required": ["mediaType", "text", "sha256"],
+            "properties": {
+              "mediaType": {"const": "text/plain"},
+              "text": {"type": "string"},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  }
+}

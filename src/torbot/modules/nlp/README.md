@@ -1,11 +1,30 @@
-# Natural Language Processing Library
+# Natural Language Processing Module
 
-This library provides tool for performing natural language processing on websites.
-This library is in it's infancy currently and can only be used for testing.
+This module classifies crawled pages into broad website categories using the
+packaged `website_classification.csv` dataset.
 
-To test gathering data use:
-`python3 gater_data.py`
-* This will generate the data necessary to train the classification model 
+Runtime classification uses `classify(html)` from `main.py`. The classifier is
+trained lazily from the CSV on first use and cached for the rest of the process,
+so crawling multiple pages does not retrain the model for every page.
 
-To predict the classification of a webiste use:
-`classify.py` and provide the url 
+## Public API
+
+```python
+from torbot.modules.nlp.main import classify
+
+category, confidence = classify("<html>...</html>")
+```
+
+`confidence` is the model's confidence for the selected category. It is not a
+model-wide accuracy score.
+
+## Optional training-data export
+
+The crawler no longer needs a generated `training_data/` directory. If you need
+one for experiments with `sklearn.datasets.load_files`, run:
+
+```sh
+python3 -m torbot.modules.nlp.gather_data
+```
+
+This creates an ignored `training_data/` directory beside the NLP module.

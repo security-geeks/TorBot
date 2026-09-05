@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DedSecInside/TorBot/schemas/investigation-report.v1.schema.json",
+  "title": "TorBot investigation-report v1",
+  "type": "object",
+  "required": ["schema", "createdAt", "source", "claims", "evidenceIds", "warnings"],
+  "properties": {
+    "schema": {"const": "investigation-report.v1"},
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "status", "evidenceIds", "source"],
+        "properties": {
+          "text": {"type": "string"},
+          "status": {"enum": ["supported", "unsupported", "conflicted"]},
+          "evidenceIds": {"type": "array", "items": {"type": "string"}},
+          "source": {"enum": ["deterministic", "model"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidenceIds": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -42,12 +42,13 @@
 ### Recent improvements
 - The CLI now allows `--version` and `--update` to run without requiring a URL.
 - The crawler now resolves relative links against the current page and skips unsupported or malformed hrefs more gracefully.
+- The optional TorBotApp desktop UI can be launched from the CLI with `torbot app` when installed as a sibling checkout.
 
 ...(will be updated)
 
 ### Dependencies
 - Tor (Optional)
-- Python 3.9+
+- Python 3.10+
 - pip
 
 ## Quick start
@@ -78,7 +79,28 @@ python main.py -u https://example.com --depth 2 --save json
 
 # Disable SOCKS5 if you are not using Tor locally
 python main.py -u https://example.com --disable-socks5 --visualize tree
+
+# Launch the optional desktop app when TorBotApp is installed
+torbot app
 ```
+
+### Evidence-first AI analysis
+
+Save a versioned crawl result and turn it into a cited investigation bundle:
+
+```sh
+torbot --url https://example.com --disable-socks5 \
+  --save result --result-file crawl-result.json
+torbot analyze crawl-result.json --provider ollama --model qwen3 \
+  --output investigation/
+```
+
+Analyst defaults to a local Ollama endpoint. Remote OpenAI-compatible
+providers require the explicit `--allow-remote` flag. Every supported finding
+must cite captured evidence, and a provider outage never prevents the
+deterministic evidence bundle from being written. See
+[TorBot Analyst](docs/ANALYST.md) for the offline quick start, output formats,
+privacy boundary, and schemas.
 
 ### Options
 ```text
@@ -93,6 +115,8 @@ optional arguments:
   -v                    Displays DEBUG level logging, default is INFO
   --version             Show the current version of TorBot.
   --update              Update TorBot to the latest stable version
+  --app                 Run optional TorBot desktop app
+  --app-dir APP_DIR     Path to a TorBotApp checkout
   -q, --quiet           Prevents display of header and IP address
   --save FORMAT         Save results in a file. (tree, JSON)
   --visualize FORMAT    Visualizes tree of data gathered. (tree, JSON, table)
@@ -105,6 +129,36 @@ optional arguments:
 If you are using Tor locally, keep the SOCKS5 proxy enabled. If you are not using Tor, add `--disable-socks5` to avoid proxy connection errors.
 
 Read more about torrc here: [Torrc](https://github.com/DedSecInside/TorBoT/blob/master/Tor.md)
+
+## Optional desktop app
+
+TorBot remains a CLI-first Python tool. The desktop UI lives in the separate
+[TorBotApp](https://github.com/KingAkeem/TorBotApp) Electron project so Node and
+Electron are not required for CLI users.
+
+To launch it from this CLI, install TorBotApp as a sibling checkout:
+
+```text
+code/
++-- TorBot/
++-- TorBotApp/
+```
+
+Then run:
+
+```sh
+torbot app
+```
+
+If TorBotApp is somewhere else, use either:
+
+```sh
+TORBOT_APP_DIR=/path/to/TorBotApp torbot app
+torbot --app --app-dir /path/to/TorBotApp
+```
+
+See [Desktop App Architecture](docs/DESKTOP_APP.md) for how the CLI, optional UI,
+and backend services fit together.
 
 ## Curated Features
 - [x] Visualization Module Revamp

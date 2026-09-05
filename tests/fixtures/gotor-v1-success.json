@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "engine": "gotor",
+  "target": "https://example.com/",
+  "maxDepth": 1,
+  "usesTor": false,
+  "startedAt": "2026-08-21T12:00:00Z",
+  "durationMs": 15,
+  "pages": [
+    {"parentUrl": "", "depth": 0, "links": ["https://example.com/child"], "metadata": {"url": "https://example.com/", "status": 200}}
+  ],
+  "errors": []
+}

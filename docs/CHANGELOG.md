@@ -2,6 +2,48 @@
 --------------------
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+- Added `--save result` for analysis-ready crawl-result v1 files with bounded visible text and content hashes.
+- Added `torbot analyze` for deterministic evidence bundles and optional local or remote OpenAI-compatible analysis.
+- Added stable evidence IDs, claim citation validation, an evidence graph, JSON schemas, and a safe surface-web fixture.
+
+### Security
+- Remote evidence transmission now requires `--allow-remote`, redacts contact data by default, and never stores API keys.
+- Crawled content is treated as untrusted data, model calls receive no tools, and uncited model output cannot become a supported finding.
+
+## 4.3.0 - 2026-07-28
+
+### Changed
+- Made NLP classification train lazily from the packaged CSV and cache the classifier for the process, avoiding model retraining for every crawled page.
+- Changed the NLP score returned by `classify()` from a misleading random-split accuracy value to prediction confidence for the selected category.
+
+### Fixed
+- Removed runtime `training_data/` generation from page classification so installed packages do not try to write generated files into `site-packages`.
+- Removed process-wide directory changes from the NLP helpers.
+
+### Tests
+- Added direct NLP coverage for HTML text extraction, CSV loading, classifier scoring, and path-safe training-data export.
+
+## 4.2.0 - 2026-07-28
+
+Install from PyPI after publishing with:
+
+```sh
+pip install torbot==4.2.0
+```
+
+### Added
+- Added optional `torbot app` and `torbot --app` CLI commands for launching the TorBotApp desktop UI when installed separately.
+- Added TorBotApp discovery through `--app-dir`, `TORBOT_APP_DIR`, or a sibling `TorBotApp` checkout.
+- Documented the optional desktop app architecture while keeping Node and Electron out of the Python package dependencies.
+- Added a safer publish helper that checks current-version artifacts and prompts for a PyPI token only when uploading.
+
+### Fixed
+- Moved the CLI implementation into the installed package so the `torbot` console command works from a wheel install.
+- Removed the deprecated `sklearn` package dependency in favor of the existing `scikit-learn` dependency so fresh installs do not fail.
+
 ## 4.1.1
 
 ### Fixed

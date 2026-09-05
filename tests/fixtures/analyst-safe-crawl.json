@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "runId": "safe-example-run",
+  "engine": "torbot",
+  "engineVersion": "4.3.0",
+  "target": "https://example.com/",
+  "settings": {"maxDepth": 1, "usesTor": false},
+  "terminalStatus": "completed",
+  "cancelled": false,
+  "startedAt": "2026-08-27T12:00:00Z",
+  "endedAt": "2026-08-27T12:00:01Z",
+  "durationMs": 1000,
+  "pages": [
+    {
+      "url": "https://example.com/",
+      "parentUrl": null,
+      "depth": 0,
+      "outcome": "fetched",
+      "status": 200,
+      "skippedReason": null,
+      "errorCategory": null,
+      "links": [{"url": "https://example.com/about", "source": "anchor"}],
+      "contacts": [],
+      "title": "Example Domain",
+      "classification": {"label": "unknown", "accuracy": 0.0},
+      "content": {
+        "mediaType": "text/plain",
+        "text": "Example Domain This domain is for use in illustrative examples in documents.",
+        "sha256": "42b193b44da288976e4a50d5f07559ffdd77ea352e09ab8c565fa1999dee474d"
+      }
+    }
+  ],
+  "diagnostics": {}
+}
